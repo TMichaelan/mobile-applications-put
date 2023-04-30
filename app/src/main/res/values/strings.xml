@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">cookbook</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="timer">Countdown timer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="place_holder_time">00:00:00</string>
+    <string name="reset">Reset</string>
+    <string name="start">start</string>
 </resources>
