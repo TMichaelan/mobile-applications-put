@@ -15,12 +15,7 @@
         app:tabMaxWidth="0dp"
         app:tabTextAppearance="?android:attr/textAppearanceMedium"
         app:textAllCaps="false" />
-
-    <fragment
-        android:id="@+id/cat_fragment"
-        android:name="com.example.cookbook.TimerFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/tabs_viewpager"
