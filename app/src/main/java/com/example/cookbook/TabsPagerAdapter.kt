@@ -14,7 +14,7 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
             0 -> {
                 // # Home Fragment
                 val bundle = Bundle()
-                bundle.putString("fragmentName", "Music Fragment")
+                bundle.putString("fragmentName", "Home Fragment")
                 val homeFragment = HomeFragment()
                 homeFragment.arguments = bundle
                 return homeFragment
@@ -22,10 +22,10 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
             1 -> {
                 // # Movies Fragment
                 val bundle = Bundle()
-                bundle.putString("fragmentName", "Movies Fragment")
-                val moviesFragment = TimerFragment()
-                moviesFragment.arguments = bundle
-                return moviesFragment
+                bundle.putString("fragmentName", "Timer Fragment")
+                val timerFragment = TimerFragment()
+                timerFragment.arguments = bundle
+                return timerFragment
             }
 //                2 -> {
 //                    // # Books Fragment

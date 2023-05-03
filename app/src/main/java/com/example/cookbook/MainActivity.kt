@@ -19,32 +19,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        // Tabs Customization
-        binding.tabLayout.setSelectedTabIndicatorColor(Color.WHITE)
-        binding.tabLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.purple_200))
-        binding.tabLayout.tabTextColors = ContextCompat.getColorStateList(this, android.R.color.white)
-
-        // Set different Text Color for Tabs for when are selected or not
-        //binding.tabLayout.setTabTextColors(R.color.normalTabTextColor, R.color.selectedTabTextColor)
-
         // Number Of Tabs
         val numberOfTabs = 3
-
-        // Set Tabs in the center
-        //binding.tabLayout.tabGravity = TabLayout.GRAVITY_CENTER
-
-        // Show all Tabs in screen
-        binding.tabLayout.tabMode = TabLayout.MODE_FIXED
-
-        // Scroll to see all Tabs
-        //binding.tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
-
-        // Set Tab icons next to the text, instead of above the text
-        binding.tabLayout.isInlineLabel = true
 
         // Set the ViewPager Adapter
         val adapter = TabsPagerAdapter(supportFragmentManager, lifecycle, numberOfTabs)
@@ -58,25 +38,17 @@ class MainActivity : AppCompatActivity() {
             when (position) {
                 0 -> {
                     tab.text = "Home"
-                    tab.setIcon(R.drawable.ic_home)
+                    tab.setIcon(R.drawable.ic_home_round)
                 }
                 1 -> {
-                    tab.text = "Breakfasts"
-                    tab.setIcon(R.drawable.ic_breakfast)
-
+                    tab.text = "Recipes"
+                    tab.setIcon(R.drawable.ic_recipe_round)
                 }
                 2 -> {
-                    tab.text = "Fast food"
-                    tab.setIcon(R.drawable.ic_fastfood)
+                    tab.text = "Favorites"
+                    tab.setIcon(R.drawable.ic_favorites_round)
                 }
-
             }
-            // Change color of the icons
-            tab.icon?.colorFilter =
-                BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                    Color.WHITE,
-                    BlendModeCompat.SRC_ATOP
-                )
         }.attach()
     }
 }
