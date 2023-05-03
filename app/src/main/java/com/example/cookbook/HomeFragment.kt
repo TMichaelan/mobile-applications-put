@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.example.cookbook.databinding.FragmentHomeBinding
 import com.example.cookbook.models.Meal
 import com.example.cookbook.models.MealList
 import com.example.easyfood.data.retrofit.RetrofitInstance
@@ -15,14 +17,15 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 class HomeFragment : Fragment() {
-
+    private lateinit var binding:FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
 
@@ -38,6 +41,12 @@ class HomeFragment : Fragment() {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 if(response.body() != null){
                     val randomMeal: Meal = response.body()!!.meals[0]
+
+
+//                    Glide.with(this@HomeFragment)
+//                        .load(randomMeal.strMealThumb)
+//                        .into(binding.imageRandomMeal)
+
                     Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal}")
                 }else{
                     return

@@ -18,6 +18,7 @@
         android:textStyle="bold"
         android:typeface="normal" />
 
+
     <TextView
         android:id="@+id/about_content"
         android:layout_width="match_parent"

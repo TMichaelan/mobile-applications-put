@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         //binding.tabLayout.setTabTextColors(R.color.normalTabTextColor, R.color.selectedTabTextColor)
 
         // Number Of Tabs
-        val numberOfTabs = 3
+        val numberOfTabs = 4
 
         // Set Tabs in the center
         //binding.tabLayout.tabGravity = TabLayout.GRAVITY_CENTER
@@ -69,6 +69,11 @@ class MainActivity : AppCompatActivity() {
                     tab.text = "Fast food"
                     tab.setIcon(R.drawable.ic_fastfood)
                 }
+                3 -> {
+                    tab.text = "Test Tab"
+                    tab.setIcon(R.drawable.ic_fastfood)
+                }
+
 
             }
             // Change color of the icons
