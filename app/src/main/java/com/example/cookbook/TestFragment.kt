@@ -6,9 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.cookbook.databinding.FragmentHomeBinding
 import com.example.cookbook.databinding.FragmentTestBinding
+import com.example.cookbook.models.Category
+import com.example.cookbook.models.CategoryList
 import com.example.cookbook.models.Meal
 import com.example.cookbook.models.MealList
 import com.example.easyfood.data.retrofit.RetrofitInstance
@@ -32,7 +37,7 @@ class TestFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentTestBinding
-
+    private var categories: MutableLiveData<List<Category>> = MutableLiveData<List<Category>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,12 +82,13 @@ class TestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getRandomMeal()
+//        getRandomMeal()
 
     }
     override fun onResume() {
         super.onResume()
-        getRandomMeal()
+//        getRandomMeal()
+        observeCategories()
     }
     private fun getRandomMeal() {
         RetrofitInstance.mealAPI.getRandomMeal().enqueue(object : Callback<MealList> {
@@ -105,4 +111,43 @@ class TestFragment : Fragment() {
             }
         })
     }
+
+    private fun getCategories(){
+        RetrofitInstance.mealAPI.getCategories().enqueue(object : Callback<CategoryList>{
+            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
+                if (response.body() != null) {
+                    categories.value = response.body()!!.categories
+
+                    Log.d("MyLog", "cat ${categories.value}")
+
+                }
+                else{
+                    return
+                }
+
+
+            }
+            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
+                Log.d("MyLog", "error: ${t.message.toString()}")
+            }
+
+        })
+    }
+
+    fun observeCategories(): LiveData<List<Category>> {
+        return categories
+    }
+
+//    private fun observeCategoriess() {
+//        observeCategories().observe(viewLifecycleOwner,object :
+//            Observer<List<Category>> {
+//
+//            override fun onChanged(t: List<Category>?) {
+//                myAdapter.setCategoryList(t!!)
+//            }
+//
+//        })
+//    }
+
+
 }

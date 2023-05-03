@@ -34,29 +34,29 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        RetrofitInstance.mealAPI.getRandomMeal().enqueue(object : Callback<MealList>{
-            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-                if(response.body() != null){
-                    val randomMeal: Meal = response.body()!!.meals[0]
-
-
-//                    Glide.with(this@HomeFragment)
-//                        .load(randomMeal.strMealThumb)
-//                        .into(binding.imageRandomMeal)
-
-                    Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal}")
-                }else{
-                    return
-                }
-            }
-
-            override fun onFailure(call: Call<MealList>, t: Throwable) {
-                Log.d("MyLog", "error: ${t.message.toString()}")
-            }
-        })
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//        RetrofitInstance.mealAPI.getRandomMeal().enqueue(object : Callback<MealList>{
+//            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+//                if(response.body() != null){
+//                    val randomMeal: Meal = response.body()!!.meals[0]
+//
+//
+////                    Glide.with(this@HomeFragment)
+////                        .load(randomMeal.strMealThumb)
+////                        .into(binding.imageRandomMeal)
+//
+//                    Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal}")
+//                }else{
+//                    return
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<MealList>, t: Throwable) {
+//                Log.d("MyLog", "error: ${t.message.toString()}")
+//            }
+//        })
+//    }
 
 }
