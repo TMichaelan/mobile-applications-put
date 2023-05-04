@@ -1,10 +1,12 @@
 package com.example.cookbook.retrofit
 
 import com.example.cookbook.models.CategoryList
+import com.example.cookbook.models.Meal
 import com.example.cookbook.models.MealList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.Properties
 
 interface MealAPI {
 
@@ -19,7 +21,4 @@ interface MealAPI {
 
     @GET("search.php?")
     fun getMealByName(@Query("s") s:String):Call<MealList>
-
-
-
 }

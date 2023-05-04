@@ -20,21 +20,20 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
                 return homeFragment
             }
             1 -> {
-                // # Movies Fragment
                 val bundle = Bundle()
-                bundle.putString("fragmentName", "Movies Fragment")
-                val moviesFragment = TestFragment()
-                moviesFragment.arguments = bundle
-                return TestFragment()
+                bundle.putString("fragmentName", "Meals Grid Fragment")
+                val mealsGridFragment = MealsGridFragment()
+                mealsGridFragment.arguments = bundle
+                return mealsGridFragment
 
             }
             2 -> {
-                // # Books Fragment
+
                 val bundle = Bundle()
-                bundle.putString("fragmentName", "Books Fragment")
-                val booksFragment = TimerFragment()
-                booksFragment.arguments = bundle
-                return TimerFragment()
+                bundle.putString("fragmentName", "Test Fragment")
+                val testFragment = TestFragment()
+                testFragment.arguments = bundle
+                return testFragment
             }
 
             else -> return HomeFragment()

@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.example.cookbook.databinding.FragmentHomeBinding
 import com.example.cookbook.models.Meal
 import com.example.cookbook.models.MealList
-import com.example.easyfood.data.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

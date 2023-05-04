@@ -1,4 +1,4 @@
-package com.example.easyfood.data.retrofit
+package com.example.cookbook.data.retrofit
 
 import com.example.cookbook.retrofit.MealAPI
 import retrofit2.Retrofit

@@ -16,7 +16,7 @@ import com.example.cookbook.models.Category
 import com.example.cookbook.models.CategoryList
 import com.example.cookbook.models.Meal
 import com.example.cookbook.models.MealList
-import com.example.easyfood.data.retrofit.RetrofitInstance
+import com.example.cookbook.data.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -87,7 +87,7 @@ class TestFragment : Fragment() {
     }
     override fun onResume() {
         super.onResume()
-//        getRandomMeal()
+        getRandomMeal()
         observeCategories()
     }
     private fun getRandomMeal() {
