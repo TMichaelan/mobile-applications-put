@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 1 -> {
                     tab.text = "Recipes"
                     tab.setIcon(R.drawable.ic_recipe_round)
+                    
                 }
                 2 -> {
                     tab.text = "Favorites"

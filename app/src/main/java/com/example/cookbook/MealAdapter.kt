@@ -7,15 +7,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cookbook.models.Meal
 
-class MealAdapter(private val meallist: ArrayList<com.example.cookbook.models.Meal>) : RecyclerView.Adapter<MealAdapter.MyViewHolder>() {
+class MealAdapter(
+    private val meallist: ArrayList<Meal>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<MealAdapter.MyViewHolder>() {
 
     // This method creates a new ViewHolder object for each item in the RecyclerView
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        // Inflate the layout for each item and return a new ViewHolder object
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.meal_item, parent, false)
-        return MyViewHolder(itemView)
+        return MyViewHolder(itemView, listener, meallist)
     }
 
     // This method returns the total
@@ -26,17 +29,44 @@ class MealAdapter(private val meallist: ArrayList<com.example.cookbook.models.Me
 
     // This method binds the data to the ViewHolder object
     // for each item in the RecyclerView
+//    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+//        val currentMeal = meallist[position]
+//        Glide.with(holder.imageId)
+//            .load(currentMeal.strMealThumb)
+//            .into(holder.imageId)
+//        holder.name.text = currentMeal.strMeal
+//    }
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentMeal = meallist[position]
         Glide.with(holder.imageId)
             .load(currentMeal.strMealThumb)
             .into(holder.imageId)
         holder.name.text = currentMeal.strMeal
+        holder.itemView.setOnClickListener { listener.onItemClick(currentMeal) }
     }
 
+    interface OnItemClickListener {
+        fun onItemClick(meal: Meal)
+    }
+
+
+
     // This class defines the ViewHolder object for each item in the RecyclerView
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(
+        itemView: View,
+        private val listener: OnItemClickListener,
+        private val meallist: ArrayList<Meal>
+    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val imageId: ImageView = itemView.findViewById(R.id.imageView)
         val name: TextView = itemView.findViewById(R.id.tvName)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            listener.onItemClick(meallist[adapterPosition])
+        }
     }
 }
