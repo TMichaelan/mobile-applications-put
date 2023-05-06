@@ -33,6 +33,8 @@ class MealDetailFragment : Fragment() {
         val mealIngredients: TextView = view.findViewById(R.id.meal_ingredients)
         val mealInstructions: TextView = view.findViewById(R.id.meal_instructions)
 
+        val timerFragment = TimerFragment()
+
         Glide.with(mealImage)
             .load(meal.strMealThumb)
             .into(mealImage)
@@ -64,6 +66,10 @@ class MealDetailFragment : Fragment() {
 
         mealIngredients.text = ingredientsAndMeasures.toString()
         mealInstructions.text = meal.strInstructions
+
+        childFragmentManager.beginTransaction()
+            .replace(R.id.timer_fragment_container, timerFragment) // Замените контейнер на TimerFragment
+            .commit() // Завершите транзакцию
 
         return view
     }

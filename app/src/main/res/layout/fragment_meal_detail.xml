@@ -60,6 +60,12 @@
             android:textSize="16sp"
             tools:text="1. Step one. 2. Step two. 3. Step three." />
 
+        <FrameLayout
+            android:id="@+id/timer_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
+
     </LinearLayout>
 
 </ScrollView>
