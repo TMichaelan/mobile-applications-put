@@ -1,12 +1,17 @@
 package com.example.cookbook.models
 
 import android.os.Parcelable
+import androidx.annotation.NonNull
 import kotlinx.parcelize.Parcelize
-
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+@Entity
 @Parcelize
 data class Meal(
-    val idMeal: String?,
-    val strMeal: String?,
+    @PrimaryKey
+    @NonNull
+    val idMeal: String,
+    val strMeal: String,
     val strDrinkAlternate: String?,
     val strCategory: String?,
     val strArea: String?,

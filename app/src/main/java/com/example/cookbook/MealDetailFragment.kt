@@ -10,15 +10,26 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.cookbook.models.Meal
-
+import android.widget.Button
+import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import com.example.cookbook.db.AppDatabase
+import android.widget.ImageButton
+import kotlinx.coroutines.withContext
 
 class MealDetailFragment : Fragment() {
     private lateinit var meal: Meal
-
+    private lateinit var saveMealButton: ImageButton
+    private lateinit var database: AppDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             meal = it.getParcelable("meal")!!
+
+            database = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "cookbook-db").build()
         }
     }
 
@@ -26,6 +37,7 @@ class MealDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_meal_detail, container, false)
 
         val mealImage: ImageView = view.findViewById(R.id.meal_image)
@@ -34,6 +46,8 @@ class MealDetailFragment : Fragment() {
         val mealInstructions: TextView = view.findViewById(R.id.meal_instructions)
 
         val timerFragment = TimerFragment()
+
+
 
         Glide.with(mealImage)
             .load(meal.strMealThumb)
@@ -71,9 +85,50 @@ class MealDetailFragment : Fragment() {
             .replace(R.id.timer_fragment_container, timerFragment) // Замените контейнер на TimerFragment
             .commit() // Завершите транзакцию
 
+
+        saveMealButton = view.findViewById(R.id.save_meal_button)
+        updateSaveMealButtonIcon()
+
+        saveMealButton.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                val mealInDb = database.mealDao().getMealById(meal.idMeal)
+                if (mealInDb != null) {
+                    database.mealDao().deleteMeal(meal)
+                } else {
+                    database.mealDao().insertMeal(meal)
+                }
+                withContext(Dispatchers.Main) {
+                    updateSaveMealButtonIcon()
+                }
+            }
+        }
+
         return view
     }
+        private fun saveMealToDatabase(meal: Meal) {
+            val db = Room.databaseBuilder(
+                requireContext(),
+                AppDatabase::class.java, "meal-database"
+            ).build()
 
+            CoroutineScope(Dispatchers.IO).launch {
+                db.mealDao().insertMeal(meal)
+            }
+        }
+
+    private fun updateSaveMealButtonIcon() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val mealInDb = database.mealDao().getMealById(meal.idMeal)
+            val iconRes = if (mealInDb != null) {
+                R.drawable.baseline_thumb_up_24
+            } else {
+                R.drawable.baseline_thumb_up_off_alt_24
+            }
+            withContext(Dispatchers.Main) {
+                saveMealButton.setImageResource(iconRes)
+            }
+        }
+    }
 
     companion object {
         @JvmStatic
