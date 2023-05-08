@@ -120,9 +120,15 @@ class TimerFragment : Fragment() {
     private fun refreshUIStates() {
         secondsView.isEnabled = !running && seconds == 0
         minutesView.isEnabled = !running && seconds == 0
+
         startButton.visibility = if (!running || (!running && seconds > 0)) View.VISIBLE else View.GONE
-        pauseButton.visibility = if (running) View.VISIBLE else View.GONE
-        stopButton.visibility = if (seconds > 0) View.VISIBLE else View.GONE
+
+//        pauseButton.visibility = if (running) View.VISIBLE else View.GONE
+//        stopButton.visibility = if (seconds > 0) View.VISIBLE else View.GONE
+
+        pauseButton.visibility = View.VISIBLE
+        stopButton.visibility =  View.VISIBLE
+
     }
 
     private fun runTimer() {

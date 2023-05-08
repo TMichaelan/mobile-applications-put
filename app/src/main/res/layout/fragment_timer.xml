@@ -10,49 +10,41 @@
     android:layout_marginVertical="?attr/listPreferredItemPaddingStart"
     >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:text="@string/timer"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_marginVertical="?attr/listPreferredItemPaddingStart">
+        android:orientation="horizontal">
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
             android:id="@+id/timer_minutes"
-            android:inputType="time"
-            android:text="0"
             style="@style/Widget.Material3.MaterialTimePicker.Display.TextInputEditText"
+            android:layout_width="78dp"
+            android:layout_height="50dp"
+            android:inputType="time"
+            android:minWidth="50dp"
+            android:text="00"
+
             android:textAlignment="center"
-            android:textSize="28sp"
-            android:minWidth="32dp"/>
+            android:textSize="40sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="40sp"
             style="@style/Widget.Material3.MaterialTimePicker.Display.Divider"
             android:text=":"/>
 
         <EditText
             android:id="@+id/timer_seconds"
             style="@style/Widget.Material3.MaterialTimePicker.Display.TextInputEditText"
-            android:layout_width="wrap_content"
+            android:layout_width="78dp"
             android:layout_height="match_parent"
             android:inputType="number"
-            android:minWidth="64dp"
-            android:text="0"
+            android:minWidth="50dp"
+            android:text="00"
             android:textAlignment="center"
-            android:textSize="28sp" />
+            android:textSize="40sp" />
 
     </LinearLayout>
 
@@ -63,11 +55,13 @@
         android:gravity="center_horizontal">
 
         <Button
+            android:id="@+id/start_timer_button"
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/baseline_play_arrow_24"
-            style="@style/Widget.Material3.Button.IconButton.Filled"
-            android:id="@+id/start_timer_button"/>
+            />
 
         <Button
             android:layout_width="wrap_content"
