@@ -28,15 +28,6 @@ class MealAdapter(
     }
 
     // This method binds the data to the ViewHolder object
-    // for each item in the RecyclerView
-//    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-//        val currentMeal = meallist[position]
-//        Glide.with(holder.imageId)
-//            .load(currentMeal.strMealThumb)
-//            .into(holder.imageId)
-//        holder.name.text = currentMeal.strMeal
-//    }
-
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentMeal = meallist[position]
         Glide.with(holder.imageId)
@@ -49,8 +40,6 @@ class MealAdapter(
     interface OnItemClickListener {
         fun onItemClick(meal: Meal)
     }
-
-
 
     // This class defines the ViewHolder object for each item in the RecyclerView
     class MyViewHolder(

@@ -29,7 +29,6 @@ class SavedMealsFragment : Fragment(), MealAdapter.OnItemClickListener {
         recyclerView = view.findViewById(R.id.recycleView)
         recyclerView.layoutManager = GridLayoutManager(context, 2)
     }
-
     override fun onResume() {
         super.onResume()
         // Загрузка сохраненных блюд из базы данных и отображение их с помощью RecyclerView

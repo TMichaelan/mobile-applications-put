@@ -12,7 +12,6 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
     override fun createFragment(position: Int): Fragment {
         when (position) {
             0 -> {
-                // # Home Fragment
                 val bundle = Bundle()
                 bundle.putString("fragmentName", "Home Fragment")
                 val homeFragment = HomeFragment()
@@ -28,12 +27,11 @@ class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var nu
 
             }
             2 -> {
-
                 val bundle = Bundle()
                 bundle.putString("fragmentName", "Favorites Fragment")
-                val FavoritesFragment = SavedMealsFragment()
-                FavoritesFragment.arguments = bundle
-                return FavoritesFragment
+                val savedMealsFragment = SavedMealsFragment()
+                savedMealsFragment.arguments = bundle
+                return savedMealsFragment
             }
 
             else -> return HomeFragment()

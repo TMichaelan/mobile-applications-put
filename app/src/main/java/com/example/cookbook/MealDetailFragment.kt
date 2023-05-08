@@ -1,7 +1,6 @@
 package com.example.cookbook
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.cookbook.models.Meal
-import android.widget.Button
-import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +29,6 @@ class MealDetailFragment : Fragment() {
             database = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "cookbook-db").build()
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,8 +42,6 @@ class MealDetailFragment : Fragment() {
         val mealInstructions: TextView = view.findViewById(R.id.meal_instructions)
 
         val timerFragment = TimerFragment()
-
-
 
         Glide.with(mealImage)
             .load(meal.strMealThumb)
@@ -83,8 +77,7 @@ class MealDetailFragment : Fragment() {
 
         childFragmentManager.beginTransaction()
             .replace(R.id.timer_fragment_container, timerFragment) // Замените контейнер на TimerFragment
-            .commit() // Завершите транзакцию
-
+            .commit()
 
         saveMealButton = view.findViewById(R.id.save_meal_button)
         updateSaveMealButtonIcon()

@@ -16,41 +16,25 @@ import retrofit2.Call
 import retrofit2.Response
 
 class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
-
-//    override fun onItemClick(meal: Meal) {
-//        // Здесь вы можете открыть MealDetailFragment и передать информацию о выбранном блюде
-//        val mealDetailFragment = MealDetailFragment.newInstance(meal)
-//        Log.d("MEAL", "meal ${meal.idMeal} name ${meal.strMeal}")
-//        Log.d("MEAL", "meal ${meal.idMeal} name ${meal.strMeal}")
-//        Log.d("MEAL", "meal ${meal.idMeal} name ${meal.strMeal}")
-////
-////        parentFragmentManager.beginTransaction()
-////            .replace(R.id.fragment_container, mealDetailFragment)
-////            .addToBackStack(null)
-////            .commit()
-//
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_meals_grid, container, false)
     }
 
     private fun getRandomMeal(callback: (ArrayList<Meal>) -> Unit) {
         val mealList = ArrayList<Meal>()
         var count = 0
-        val randomMealAmount = 5
+        val randomMealAmount = 20
         for (i in 1..randomMealAmount) {
             RetrofitInstance.mealAPI.getRandomMeal().enqueue(object : retrofit2.Callback<MealList> {
                 override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                     if (response.body() != null) {
                         val randomMeal: Meal = response.body()!!.meals[0]
                         mealList += randomMeal
-                        Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal} mealList${mealList}")
+                        //Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal} mealList${mealList}")
                     }
                     count++
                     if (count == randomMealAmount) {
@@ -59,7 +43,7 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
                 }
 
                 override fun onFailure(call: Call<MealList>, t: Throwable) {
-                    Log.d("MyLog", "error: ${t.message.toString()}")
+                    //Log.d("MyLog", "error: ${t.message.toString()}")
                     count++
                     if (count == randomMealAmount) {
                         callback(mealList)
@@ -89,7 +73,7 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(meal: Meal) {
-        // Здесь вы можете открыть MealDetailActivity и передать информацию о выбранном блюде
+        // открыть MealDetailActivity и передать информацию о выбранном блюде
         val intent = Intent(requireContext(), DetailActivity::class.java)
         intent.putExtra("meal", meal)
         startActivity(intent)
