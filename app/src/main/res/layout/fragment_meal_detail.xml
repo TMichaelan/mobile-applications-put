@@ -18,16 +18,23 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:contentDescription="@string/meal_image_description"
+            android:elevation="4dp"
+            tools:srcCompat="@tools:sample/avatars"
+            />
 
         <ImageButton
             android:id="@+id/save_meal_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/baseline_thumb_up_off_alt_24"
-            android:layout_gravity="right"
-            style="@style/Widget.Material3.Button.IconButton.Filled" />
-
+            android:layout_gravity="end"
+            android:contentDescription="@string/save_meal_button_description"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            />
 
         <TextView
             android:id="@+id/meal_name"
@@ -41,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Ingredients:"
+            android:text="@string/ingredients_label"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -57,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Instructions:"
+            android:text="@string/instructions_label"
             android:textSize="18sp"
             android:textStyle="bold" />
 

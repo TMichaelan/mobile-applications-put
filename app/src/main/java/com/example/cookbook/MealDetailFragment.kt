@@ -76,7 +76,7 @@ class MealDetailFragment : Fragment() {
         mealInstructions.text = meal.strInstructions
 
         childFragmentManager.beginTransaction()
-            .replace(R.id.timer_fragment_container, timerFragment) // Замените контейнер на TimerFragment
+            .replace(R.id.timer_fragment_container, timerFragment)
             .commit()
 
         saveMealButton = view.findViewById(R.id.save_meal_button)
@@ -98,17 +98,16 @@ class MealDetailFragment : Fragment() {
 
         return view
     }
-        private fun saveMealToDatabase(meal: Meal) {
-            val db = Room.databaseBuilder(
-                requireContext(),
-                AppDatabase::class.java, "meal-database"
-            ).build()
-
-            CoroutineScope(Dispatchers.IO).launch {
-                db.mealDao().insertMeal(meal)
-            }
-        }
-
+//        private fun saveMealToDatabase(meal: Meal) {
+//            val db = Room.databaseBuilder(
+//                requireContext(),
+//                AppDatabase::class.java, "meal-database"
+//            ).build()
+//
+//            CoroutineScope(Dispatchers.IO).launch {
+//                db.mealDao().insertMeal(meal)
+//            }
+//        }
     private fun updateSaveMealButtonIcon() {
         CoroutineScope(Dispatchers.IO).launch {
             val mealInDb = database.mealDao().getMealById(meal.idMeal)
