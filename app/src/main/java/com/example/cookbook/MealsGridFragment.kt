@@ -78,6 +78,8 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
             // recyclerview to inflate the items.
             recyclerView.adapter = itemAdapter
         }
+
+
     }
 
     private fun shareIngredients() {

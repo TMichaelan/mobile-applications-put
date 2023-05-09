@@ -1,5 +1,6 @@
 package com.example.cookbook
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,12 +12,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-//import com.example.cookbook.extensions.vibratePhone
 
 private const val ARG_PARAM_SECONDS = "seconds"
 private const val ARG_PARAM_RUNNING = "running"
 private const val ARG_PARAM_WAS_RUNNING = "wasRunning"
-
+private lateinit var mediaPlayer: MediaPlayer
 class TimerFragment : Fragment() {
     private var seconds = 0
     private var running = false
@@ -111,10 +111,15 @@ class TimerFragment : Fragment() {
         return view
     }
 
+    private fun playSound() {
+        mediaPlayer = MediaPlayer.create(context, R.raw.timer_sound)
+        mediaPlayer.start()
+    }
+
     private fun stopTimer() {
         running = false
         refreshUIStates()
-        //vibratePhone(300)
+        playSound()
     }
 
     private fun refreshUIStates() {

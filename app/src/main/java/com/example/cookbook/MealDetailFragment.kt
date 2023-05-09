@@ -1,5 +1,7 @@
 package com.example.cookbook
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -23,6 +25,7 @@ class MealDetailFragment : Fragment() {
     private lateinit var meal: Meal
     private lateinit var saveMealButton: ImageButton
     private lateinit var database: AppDatabase
+    private var isImageZoomed = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +38,6 @@ class MealDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
 
         val view = inflater.inflate(R.layout.fragment_meal_detail, container, false)
 
@@ -110,6 +112,15 @@ class MealDetailFragment : Fragment() {
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_ingredients_title)))
         }
 
+        mealImage.setOnClickListener {
+            if (!isImageZoomed) {
+                zoomInImage(mealImage)
+            } else {
+                zoomOutImage(mealImage)
+            }
+            isImageZoomed = !isImageZoomed
+        }
+
         return view
     }
 //        private fun saveMealToDatabase(meal: Meal) {
@@ -122,6 +133,24 @@ class MealDetailFragment : Fragment() {
 //                db.mealDao().insertMeal(meal)
 //            }
 //        }
+
+    private fun zoomInImage(imageView: ImageView) {
+        val scaleX = ObjectAnimator.ofFloat(imageView, View.SCALE_X, 2.5f)
+        val scaleY = ObjectAnimator.ofFloat(imageView, View.SCALE_Y, 2.5f)
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(scaleX, scaleY)
+        animatorSet.duration = 300
+        animatorSet.start()
+    }
+
+    private fun zoomOutImage(imageView: ImageView) {
+        val scaleX = ObjectAnimator.ofFloat(imageView, View.SCALE_X, 1f)
+        val scaleY = ObjectAnimator.ofFloat(imageView, View.SCALE_Y, 1f)
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(scaleX, scaleY)
+        animatorSet.duration = 300
+        animatorSet.start()
+    }
     private fun updateSaveMealButtonIcon() {
         CoroutineScope(Dispatchers.IO).launch {
             val mealInDb = database.mealDao().getMealById(meal.idMeal)
