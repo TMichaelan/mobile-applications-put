@@ -1,86 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     tools:context=".MealDetailFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/meal_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/meal_image_description"
+                android:elevation="4dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/save_meal_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/baseline_thumb_up_off_alt_24"
+                android:layout_gravity="end"
+                android:contentDescription="@string/save_meal_button_description"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+
+            <TextView
+                android:id="@+id/meal_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="24sp"
+                tools:text="Meal Name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/ingredients_label"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/meal_ingredients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
+                tools:text="Ingredient 1, Ingredient 2, Ingredient 3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/instructions_label"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/meal_instructions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
+                tools:text="1. Step one. 2. Step two. 3. Step three." />
+
+            <FrameLayout
+                android:id="@+id/timer_fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_share_ingredients"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_gravity="end|bottom"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/baseline_share_24" />
 
-        <ImageView
-            android:id="@+id/meal_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/meal_image_description"
-            android:elevation="4dp"
-            tools:srcCompat="@tools:sample/avatars"
-            />
-
-        <ImageButton
-            android:id="@+id/save_meal_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/baseline_thumb_up_off_alt_24"
-            android:layout_gravity="end"
-            android:contentDescription="@string/save_meal_button_description"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            />
-
-        <TextView
-            android:id="@+id/meal_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="24sp"
-            tools:text="Meal Name" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/ingredients_label"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/meal_ingredients"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            tools:text="Ingredient 1, Ingredient 2, Ingredient 3" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/instructions_label"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/meal_instructions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            tools:text="1. Step one. 2. Step two. 3. Step three." />
-
-        <FrameLayout
-            android:id="@+id/timer_fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom" />
-    </LinearLayout>
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

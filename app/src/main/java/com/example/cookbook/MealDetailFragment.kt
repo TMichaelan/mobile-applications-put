@@ -1,5 +1,6 @@
 package com.example.cookbook
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.cookbook.db.AppDatabase
 import android.widget.ImageButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.withContext
 
 class MealDetailFragment : Fragment() {
@@ -33,6 +35,7 @@ class MealDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
 
         val view = inflater.inflate(R.layout.fragment_meal_detail, container, false)
 
@@ -94,6 +97,17 @@ class MealDetailFragment : Fragment() {
                     updateSaveMealButtonIcon()
                 }
             }
+        }
+
+        val fabShareIngredients = view.findViewById<FloatingActionButton>(R.id.fab_share_ingredients)
+        fabShareIngredients.setOnClickListener {
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_ingredients_subject, meal.strMeal))
+                putExtra(Intent.EXTRA_TEXT, mealIngredients.text.toString())
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_ingredients_title)))
         }
 
         return view

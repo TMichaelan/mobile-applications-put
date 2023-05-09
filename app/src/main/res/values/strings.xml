@@ -11,4 +11,7 @@
     <string name="save_meal_button_description">Save meal button</string>
     <string name="ingredients_label">Ingridients:</string>
     <string name="instructions_label">Instructions:</string>
+    <string name="fab_share_ingredients_description">Share ingredients</string>
+    <string name="share_ingredients_subject">Ingredients for %1$s</string>
+    <string name="share_ingredients_title">Share ingredients</string>
 </resources>

@@ -8,17 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cookbook.data.retrofit.RetrofitInstance
 import com.example.cookbook.models.Meal
 import com.example.cookbook.models.MealList
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Response
 
 class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
+
+    private var selectedMeal: Meal? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,7 +30,6 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
         val layoutId = if (resources.getBoolean(R.bool.is_tablet)) R.layout.meals_grid_and_detail else R.layout.fragment_meals_grid
         return inflater.inflate(layoutId, container, false)
     }
-
     private fun getRandomMeal(callback: (ArrayList<Meal>) -> Unit) {
         val mealList = ArrayList<Meal>()
         var count = 0
@@ -38,7 +40,7 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
                     if (response.body() != null) {
                         val randomMeal: Meal = response.body()!!.meals[0]
                         mealList += randomMeal
-                        Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal} mealList${mealList}")
+//                        Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal} mealList${mealList}")
                     }
                     count++
                     if (count == randomMealAmount) {
@@ -47,7 +49,7 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
                 }
 
                 override fun onFailure(call: Call<MealList>, t: Throwable) {
-                    Log.d("MyLog", "error: ${t.message.toString()}")
+//                    Log.d("MyLog", "error: ${t.message.toString()}")
                     count++
                     if (count == randomMealAmount) {
                         callback(mealList)
@@ -75,12 +77,30 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
             // adapter instance is set to the
             // recyclerview to inflate the items.
             recyclerView.adapter = itemAdapter
-
         }
+    }
+
+    private fun shareIngredients() {
+        val meal = selectedMeal
+        if (meal == null) {
+            Toast.makeText(requireContext(), "Выберите блюдо для отправки списка ингредиентов", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val ingredients = meal.getIngredientsList()
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, ingredients.joinToString(", "))
+            type = "text/plain"
+        }
+        startActivity(Intent.createChooser(shareIntent, "Отправить ингредиенты"))
     }
 
     override fun onItemClick(meal: Meal) {
         // Здесь вы можете открыть MealDetailActivity и передать информацию о выбранном блюде
+
+        selectedMeal = meal
+
         if (resources.getBoolean(R.bool.is_tablet)) {
             val text = view?.findViewById<TextView>(R.id.textView)
             if (text != null) {
