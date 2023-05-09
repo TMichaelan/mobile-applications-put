@@ -3,6 +3,7 @@ package com.example.cookbook
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cookbook.databinding.ActivityMainBinding
+import com.example.cookbook.models.Meal
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -13,11 +14,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Получение списка блюд, переданных из SplashActivity
+        val mealList = intent.getSerializableExtra("mealList") as ArrayList<Meal>
+
         // Number Of Tabs
         val numberOfTabs = 3
 
         // Set the ViewPager Adapter
-        val adapter = TabsPagerAdapter(supportFragmentManager, lifecycle, numberOfTabs)
+        val adapter = TabsPagerAdapter(supportFragmentManager, lifecycle, numberOfTabs, mealList)
         binding.tabsViewpager.adapter = adapter
 
         // Enable Swipe
@@ -33,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 1 -> {
                     tab.text = "Recipes"
                     tab.setIcon(R.drawable.ic_recipe_round)
-                    
+
                 }
                 2 -> {
                     tab.text = "Favorites"
@@ -43,4 +47,3 @@ class MainActivity : AppCompatActivity() {
         }.attach()
     }
 }
-

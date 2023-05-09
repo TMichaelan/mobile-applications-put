@@ -21,7 +21,6 @@ import retrofit2.Response
 class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
 
     private var selectedMeal: Meal? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,47 +29,48 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
         val layoutId = if (resources.getBoolean(R.bool.is_tablet)) R.layout.meals_grid_and_detail else R.layout.fragment_meals_grid
         return inflater.inflate(layoutId, container, false)
     }
-    private fun getRandomMeal(callback: (ArrayList<Meal>) -> Unit) {
-        val mealList = ArrayList<Meal>()
-        var count = 0
-        val randomMealAmount = 20
-        for (i in 1..randomMealAmount) {
-            RetrofitInstance.mealAPI.getRandomMeal().enqueue(object : retrofit2.Callback<MealList> {
-                override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-                    if (response.body() != null) {
-                        val randomMeal: Meal = response.body()!!.meals[0]
-                        mealList += randomMeal
-//                        Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal} mealList${mealList}")
-                    }
-                    count++
-                    if (count == randomMealAmount) {
-                        callback(mealList)
-                    }
-                }
-
-                override fun onFailure(call: Call<MealList>, t: Throwable) {
-//                    Log.d("MyLog", "error: ${t.message.toString()}")
-                    count++
-                    if (count == randomMealAmount) {
-                        callback(mealList)
-                    }
-                }
-            })
-        }
-    }
+//    private fun getRandomMeal(callback: (ArrayList<Meal>) -> Unit) {
+//        val mealList = ArrayList<Meal>()
+//        var count = 0
+//        val randomMealAmount = 20
+//        for (i in 1..randomMealAmount) {
+//            RetrofitInstance.mealAPI.getRandomMeal().enqueue(object : retrofit2.Callback<MealList> {
+//                override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+//                    if (response.body() != null) {
+//                        val randomMeal: Meal = response.body()!!.meals[0]
+//                        mealList += randomMeal
+////                        Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal} mealList${mealList}")
+//                    }
+//                    count++
+//                    if (count == randomMealAmount) {
+//                        callback(mealList)
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<MealList>, t: Throwable) {
+////                    Log.d("MyLog", "error: ${t.message.toString()}")
+//                    count++
+//                    if (count == randomMealAmount) {
+//                        callback(mealList)
+//                    }
+//                }
+//            })
+//        }
+//    }
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
-        // getting the mealList
-        getRandomMeal{mealList ->
+        // Получение списка блюд из аргументов
+        val mealList = arguments?.getSerializable("mealList") as? ArrayList<Meal>
+
+        if (mealList != null) {
             // Assign mealList to ItemAdapter
             val itemAdapter = MealAdapter(mealList, this)
             // Set the LayoutManager that
             // this RecyclerView will use.
-            val recyclerView: RecyclerView =view.findViewById(R.id.recycleView)
+            val recyclerView: RecyclerView = view.findViewById(R.id.recycleView)
             var columns = 2
             if (resources.getBoolean(R.bool.is_tablet)) columns = 1
             recyclerView.layoutManager = GridLayoutManager(context, columns)
@@ -78,8 +78,6 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
             // recyclerview to inflate the items.
             recyclerView.adapter = itemAdapter
         }
-
-
     }
 
     private fun shareIngredients() {
@@ -121,8 +119,18 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
         }
     }
 
+//    companion object {
+//        @JvmStatic
+//        fun newInstance() = MealsGridFragment()
+//    }
+
     companion object {
         @JvmStatic
-        fun newInstance() = MealsGridFragment()
+        fun newInstance(mealList: ArrayList<Meal>) = MealsGridFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable("mealList", mealList)
+            }
+        }
     }
+
 }

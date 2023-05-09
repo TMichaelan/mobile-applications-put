@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
+import com.example.cookbook.MealRepository
 class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,16 +21,21 @@ class SplashActivity : AppCompatActivity() {
 
         // Анимация с использованием ObjectAnimator
         val rotationAnimator = ObjectAnimator.ofFloat(logoImageView, "rotation", 0f, 360f)
-        rotationAnimator.duration = 2000
+        rotationAnimator.duration = 4000
         rotationAnimator.interpolator = DecelerateInterpolator()
 
         rotationAnimator.start()
 
         // Задержка перед переходом на главный экран
         CoroutineScope(Dispatchers.Main).launch {
-            delay(3000)
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-            finish()
+            MealRepository.getRandomMeal { mealList ->
+
+                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                intent.putExtra("mealList", mealList)
+                startActivity(intent)
+
+                finish()
+            }
         }
     }
 }
