@@ -10,6 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class TabsPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private var numberOfTabs: Int) : FragmentStateAdapter(fm, lifecycle) {
 
     override fun createFragment(position: Int): Fragment {
+
         when (position) {
             0 -> {
                 val bundle = Bundle()

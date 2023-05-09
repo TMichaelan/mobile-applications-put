@@ -19,6 +19,8 @@ import retrofit2.Call
 import retrofit2.Response
 
 class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
+    private var mealList: ArrayList<Meal>? = null
+//    private var lastItemClicked: Meal? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,39 +31,51 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
     }
 
     private fun getRandomMeal(callback: (ArrayList<Meal>) -> Unit) {
-        val mealList = ArrayList<Meal>()
-        var count = 0
-        val randomMealAmount = 20
-        for (i in 1..randomMealAmount) {
-            RetrofitInstance.mealAPI.getRandomMeal().enqueue(object : retrofit2.Callback<MealList> {
-                override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-                    if (response.body() != null) {
-                        val randomMeal: Meal = response.body()!!.meals[0]
-                        mealList += randomMeal
-                        Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal} mealList${mealList}")
+        // Only generate mealList if it hasn't been generated before
+        if (mealList == null) {
+            mealList = ArrayList()
+            var count = 0
+            val randomMealAmount = 20
+            for (i in 1..randomMealAmount) {
+                RetrofitInstance.mealAPI.getRandomMeal().enqueue(object : retrofit2.Callback<MealList> {
+                    override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+                        if (response.body() != null) {
+                            val randomMeal: Meal = response.body()!!.meals[0]
+                            mealList!!.add(randomMeal)
+                            Log.d("MyLog", "meal ${randomMeal.idMeal} name ${randomMeal.strMeal} mealList${mealList}")
+                        }
+                        count++
+                        if (count == randomMealAmount) {
+                            callback(mealList!!)
+                        }
                     }
-                    count++
-                    if (count == randomMealAmount) {
-                        callback(mealList)
-                    }
-                }
 
-                override fun onFailure(call: Call<MealList>, t: Throwable) {
-                    Log.d("MyLog", "error: ${t.message.toString()}")
-                    count++
-                    if (count == randomMealAmount) {
-                        callback(mealList)
+                    override fun onFailure(call: Call<MealList>, t: Throwable) {
+                        Log.d("MyLog", "error: ${t.message.toString()}")
+                        count++
+                        if (count == randomMealAmount) {
+                            callback(mealList!!)
+                        }
                     }
-                }
-            })
+                })
+            }
+        } else {
+            callback(mealList!!)
         }
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState != null) {
+            mealList = savedInstanceState.getParcelableArrayList("mealList")
+//            lastItemClicked = savedInstanceState.getParcelable("lastItemClicked")
+//            lastItemClicked?.let { onItemClick(it) }
+//            parentFragmentManager.beginTransaction()
+//                .replace(R.id.detail_frame, MealDetailFragment())
+//                .commit()
+        }
         // getting the mealList
         getRandomMeal{mealList ->
             // Assign mealList to ItemAdapter
@@ -75,10 +89,15 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
             // adapter instance is set to the
             // recyclerview to inflate the items.
             recyclerView.adapter = itemAdapter
-
         }
-    }
 
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Save mealList in savedInstanceState
+        outState.putParcelableArrayList("mealList", mealList)
+//        outState.putParcelable("lastItemClicked", lastItemClicked)
+    }
     override fun onItemClick(meal: Meal) {
         // Здесь вы можете открыть MealDetailActivity и передать информацию о выбранном блюде
         if (resources.getBoolean(R.bool.is_tablet)) {
@@ -86,7 +105,7 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
             if (text != null) {
                 text.visibility = View.GONE
             }
-
+//            lastItemClicked = meal
             val mealDetailFragment = MealDetailFragment.newInstance(meal)
             parentFragmentManager.beginTransaction()
                 .replace(R.id.detail_frame, mealDetailFragment)
