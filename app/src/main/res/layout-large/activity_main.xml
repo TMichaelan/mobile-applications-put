@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:background="#DFDFDF"
         app:tabMaxWidth="0dp"
+        app:tabIndicatorFullWidth="true"
         app:tabTextAppearance="?android:attr/textAppearanceMedium"
         app:textAllCaps="false" />
 
