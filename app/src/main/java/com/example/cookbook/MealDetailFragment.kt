@@ -18,12 +18,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.cookbook.db.AppDatabase
 import android.widget.ImageButton
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.withContext
 
 class MealDetailFragment : Fragment() {
     private lateinit var meal: Meal
-    private lateinit var saveMealButton: ImageButton
+    private lateinit var saveMealButton: MaterialButton
     private lateinit var database: AppDatabase
     private var isImageZoomed = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -160,7 +161,7 @@ class MealDetailFragment : Fragment() {
                 R.drawable.baseline_thumb_up_off_alt_24
             }
             withContext(Dispatchers.Main) {
-                saveMealButton.setImageResource(iconRes)
+                saveMealButton.setIconResource(iconRes)
             }
         }
     }

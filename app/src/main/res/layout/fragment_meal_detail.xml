@@ -26,17 +26,26 @@
                 android:elevation="4dp"
                 tools:srcCompat="@tools:sample/avatars" />
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/save_meal_button"
+                style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/baseline_thumb_up_off_alt_24"
                 android:layout_gravity="end"
+                android:layout_marginTop="10dp"
                 android:contentDescription="@string/save_meal_button_description"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
                 android:minWidth="48dp"
                 android:minHeight="48dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp" />
+                app:cornerRadius="30dp"
+                app:icon="@drawable/baseline_thumb_up_off_alt_24"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="20dp"
+                app:iconTint="?attr/colorOnPrimary" />
 
             <TextView
                 android:id="@+id/meal_name"
