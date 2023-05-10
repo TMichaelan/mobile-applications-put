@@ -18,6 +18,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.cookbook.db.AppDatabase
 import android.widget.ImageButton
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.withContext
@@ -124,6 +126,23 @@ class MealDetailFragment : Fragment() {
 
         return view
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val mealName = meal.strMeal
+        val collapsingToolbarLayout: CollapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar_layout)
+        collapsingToolbarLayout.title = mealName
+
+//        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBar)
+//        toolbar.setNavigationOnClickListener {
+//            requireActivity().onBackPressed()
+//        }
+//        toolbar.title = meal.strMeal
+
+        // Весь остальной код
+    }
+
 //        private fun saveMealToDatabase(meal: Meal) {
 //            val db = Room.databaseBuilder(
 //                requireContext(),
