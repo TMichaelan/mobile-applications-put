@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,14 +18,13 @@ import retrofit2.Response
 
 class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
     private var mealList: ArrayList<Meal>? = null
-//    private var lastItemClicked: Meal? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val layoutId = if (resources.getBoolean(R.bool.is_tablet)) R.layout.meals_grid_and_detail else R.layout.fragment_meals_grid
-        return inflater.inflate(layoutId, container, false)
+        return inflater.inflate(layoutId, container)
     }
 
     private fun getRandomMeal(callback: (ArrayList<Meal>) -> Unit) {
@@ -70,11 +67,6 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
             mealList = savedInstanceState.getParcelableArrayList("mealList")
-//            lastItemClicked = savedInstanceState.getParcelable("lastItemClicked")
-//            lastItemClicked?.let { onItemClick(it) }
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.detail_frame, MealDetailFragment())
-//                .commit()
         }
         // getting the mealList
         getRandomMeal{mealList ->
@@ -96,7 +88,6 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
         super.onSaveInstanceState(outState)
         // Save mealList in savedInstanceState
         outState.putParcelableArrayList("mealList", mealList)
-//        outState.putParcelable("lastItemClicked", lastItemClicked)
     }
     override fun onItemClick(meal: Meal) {
         // Здесь вы можете открыть MealDetailActivity и передать информацию о выбранном блюде
@@ -105,7 +96,6 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
             if (text != null) {
                 text.visibility = View.GONE
             }
-//            lastItemClicked = meal
             val mealDetailFragment = MealDetailFragment.newInstance(meal)
             parentFragmentManager.beginTransaction()
                 .replace(R.id.detail_frame, mealDetailFragment)

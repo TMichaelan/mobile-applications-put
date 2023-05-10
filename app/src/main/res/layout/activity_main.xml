@@ -25,6 +25,7 @@
         app:tabIndicatorColor="#FF3939"
         app:tabSelectedTextColor="#FF3939"
 
+        app:tabIndicatorFullWidth="true"
         app:tabInlineLabel="true"
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
