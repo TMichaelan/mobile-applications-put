@@ -11,4 +11,7 @@
     <color name="lightGray">#EEE</color>
     <color name="brightRed">#FF3939</color>
 
+    <color name="darkBlue">#3415B0</color>
+    <color name="darkViolet">#3415B0</color>
+
 </resources>

@@ -14,4 +14,6 @@
     <string name="fab_share_ingredients_description">Share ingredients</string>
     <string name="share_ingredients_subject">Ingredients for %1$s</string>
     <string name="share_ingredients_title">Share ingredients</string>
+    <string name="quot_cookbook_quot_is_the_best_recipe_catalog_that_you_can_find">\"CookBook\" is the best recipe catalog that you can find!</string>
+    <string name="about_quot_cookbook_quot">About \"CookBook\"</string>
 </resources>
