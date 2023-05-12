@@ -16,6 +16,7 @@ import com.example.cookbook.models.Meal
 
 class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
     private var selectedMeal: Meal? = null
+    private var textVisible: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +28,11 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        savedInstanceState?.let {
+            textVisible = it.getBoolean("textVisible", true)
+        }
+
         // Получение списка блюд из аргументов
         val mealList = arguments?.getSerializable("mealList") as? ArrayList<Meal>
 
@@ -43,25 +49,36 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
             // recyclerview to inflate the items.
             recyclerView.adapter = itemAdapter
         }
+
+        if (resources.getBoolean(R.bool.is_tablet)) {
+            val text = view.findViewById<TextView>(R.id.textView)
+            text.visibility = if (textVisible) View.VISIBLE else View.GONE
+        }
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("textVisible", textVisible)
     }
 
 
-    override fun onItemClick(meal: Meal) {
-        // Здесь вы можете открыть MealDetailActivity и передать информацию о выбранном блюде
 
+    override fun onItemClick(meal: Meal) {
         selectedMeal = meal
 
         if (resources.getBoolean(R.bool.is_tablet)) {
             val text = view?.findViewById<TextView>(R.id.textView)
             if (text != null) {
                 text.visibility = View.GONE
+                textVisible = false
             }
             val mealDetailFragment = MealDetailFragment.newInstance(meal)
             childFragmentManager.beginTransaction()
                 .replace(R.id.detail_frame, mealDetailFragment)
                 .commit()
         }
-        else{
+        else {
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.putExtra("meal", meal)
             startActivity(intent)
