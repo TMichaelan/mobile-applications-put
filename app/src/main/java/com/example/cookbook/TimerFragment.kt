@@ -17,6 +17,7 @@ private const val ARG_PARAM_SECONDS = "seconds"
 private const val ARG_PARAM_RUNNING = "running"
 private const val ARG_PARAM_WAS_RUNNING = "wasRunning"
 private lateinit var mediaPlayer: MediaPlayer
+
 class TimerFragment : Fragment() {
     private var seconds = 0
     private var running = false
@@ -30,7 +31,6 @@ class TimerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         savedInstanceState?.let {
             seconds = it.getInt(ARG_PARAM_SECONDS)
             running = it.getBoolean(ARG_PARAM_RUNNING)
@@ -38,7 +38,7 @@ class TimerFragment : Fragment() {
         }
     }
 
-    class MinMaxFilter(private val minValue: Int, private val maxValue: Int) : InputFilter {
+    inner class MinMaxFilter(private val minValue: Int, private val maxValue: Int) : InputFilter {
         override fun filter(
             source: CharSequence,
             start: Int,
@@ -68,7 +68,15 @@ class TimerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_timer, container, false)
+        setupViews(view)
+        setupListeners()
+        runTimer()
+        refreshUIStates()
 
+        return view
+    }
+
+    private fun setupViews(view: View) {
         secondsView = view.findViewById(R.id.timer_seconds)
         minutesView = view.findViewById(R.id.timer_minutes)
         startButton = view.findViewById(R.id.start_timer_button)
@@ -77,38 +85,39 @@ class TimerFragment : Fragment() {
 
         secondsView.filters = arrayOf(MinMaxFilter(0, 59))
         minutesView.filters = arrayOf(MinMaxFilter(0, 180))
+    }
 
-        startButton.setOnClickListener {
-            if (secondsView.text.isEmpty() || minutesView.text.isEmpty()) {
-                return@setOnClickListener
-            }
+    private fun setupListeners() {
+        startButton.setOnClickListener { onStartButtonClick() }
+        pauseButton.setOnClickListener { onPauseButtonClick() }
+        stopButton.setOnClickListener { onStopButtonClick() }
+    }
 
-            seconds = secondsView.text.toString().toInt() + minutesView.text.toString().toInt() * 60
-            if (seconds <= 0) {
-                return@setOnClickListener
-            }
-
-            running = true
-            refreshUIStates()
+    private fun onStartButtonClick() {
+        if (secondsView.text.isEmpty() || minutesView.text.isEmpty()) {
+            return
         }
 
-        pauseButton.setOnClickListener {
-            running = false
-            refreshUIStates()
+        seconds = secondsView.text.toString().toInt() + minutesView.text.toString().toInt() * 60
+        if (seconds <= 0) {
+            return
         }
 
-        stopButton.setOnClickListener {
-            running = false
-            seconds = 0
-            secondsView.setText("%02d".format(0))
-            minutesView.setText("%02d".format(0))
-            refreshUIStates()
-        }
-
-        runTimer()
+        running = true
         refreshUIStates()
+    }
 
-        return view
+    private fun onPauseButtonClick() {
+        running = false
+
+        refreshUIStates()
+    }
+
+    private fun onStopButtonClick() {
+        running = false
+        seconds = 0
+        updateTimerUI()
+        refreshUIStates()
     }
 
     private fun playSound() {
@@ -123,17 +132,19 @@ class TimerFragment : Fragment() {
     }
 
     private fun refreshUIStates() {
-        secondsView.isEnabled = !running && seconds == 0
-        minutesView.isEnabled = !running && seconds == 0
+        val isEnabled = !running && seconds == 0
+        secondsView.isEnabled = isEnabled
+        minutesView.isEnabled = isEnabled
 
-        startButton.visibility = if (!running || (!running && seconds > 0)) View.VISIBLE else View.GONE
-
-//        pauseButton.visibility = if (running) View.VISIBLE else View.GONE
-//        stopButton.visibility = if (seconds > 0) View.VISIBLE else View.GONE
-
+        startButton.visibility =
+            if (!running || (!running && seconds > 0)) View.VISIBLE else View.GONE
         pauseButton.visibility = View.VISIBLE
-        stopButton.visibility =  View.VISIBLE
+        stopButton.visibility = View.VISIBLE
+    }
 
+    private fun updateTimerUI() {
+        secondsView.setText("%02d".format(seconds % 60))
+        minutesView.setText("%02d".format(seconds / 60))
     }
 
     private fun runTimer() {
@@ -144,8 +155,7 @@ class TimerFragment : Fragment() {
                 stopTimer()
             } else if (running) {
                 seconds--
-                secondsView.setText("%02d".format(seconds % 60))
-                minutesView.setText("%02d".format(seconds / 60))
+                updateTimerUI()
             }
 
             handler.postDelayed({ runTimer() }, 1000)
