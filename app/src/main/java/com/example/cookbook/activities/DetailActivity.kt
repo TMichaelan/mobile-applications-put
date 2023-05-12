@@ -1,8 +1,10 @@
-package com.example.cookbook
+package com.example.cookbook.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.cookbook.fragments.MealDetailFragment
+import com.example.cookbook.R
 import com.example.cookbook.models.Meal
 
 class DetailActivity : AppCompatActivity() {
@@ -17,7 +19,6 @@ class DetailActivity : AppCompatActivity() {
                     .replace(R.id.fragment_container, MealDetailFragment.newInstance(meal))
                     .commit()
             } else {
-                // Закройте активность или покажите сообщение об ошибке
                 Toast.makeText(this, "Error: Meal not found", Toast.LENGTH_SHORT).show()
                 finish()
             }

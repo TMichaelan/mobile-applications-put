@@ -1,4 +1,4 @@
-package com.example.cookbook
+package com.example.cookbook.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,11 +13,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     companion object {
         @JvmStatic

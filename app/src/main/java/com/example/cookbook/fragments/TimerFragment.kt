@@ -1,4 +1,4 @@
-package com.example.cookbook
+package com.example.cookbook.fragments
 
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -12,11 +12,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.example.cookbook.*
 
 private const val ARG_PARAM_SECONDS = "seconds"
 private const val ARG_PARAM_RUNNING = "running"
 private const val ARG_PARAM_WAS_RUNNING = "wasRunning"
 private lateinit var mediaPlayer: MediaPlayer
+
 
 class TimerFragment : Fragment() {
     private var seconds = 0

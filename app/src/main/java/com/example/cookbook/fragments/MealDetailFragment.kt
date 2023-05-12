@@ -1,4 +1,4 @@
-package com.example.cookbook
+package com.example.cookbook.fragments
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -13,13 +13,12 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.cookbook.models.Meal
 import androidx.room.Room
+import com.example.cookbook.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.cookbook.db.AppDatabase
-import android.widget.ImageButton
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.withContext
@@ -155,7 +154,6 @@ class MealDetailFragment : Fragment() {
 
     }
 
-
     private fun zoomInImage(imageView: ImageView) {
         val scaleX = ObjectAnimator.ofFloat(imageView, View.SCALE_X, 2.5f)
         val scaleY = ObjectAnimator.ofFloat(imageView, View.SCALE_Y, 2.5f)
@@ -194,7 +192,6 @@ class MealDetailFragment : Fragment() {
                 putParcelable("meal", meal)
             }
         }
-        private const val TIMER_FRAGMENT_TAG = "timerFragment"
     }
 
 }

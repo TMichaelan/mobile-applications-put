@@ -1,4 +1,4 @@
-package com.example.cookbook
+package com.example.cookbook.activities
 
 import android.animation.ObjectAnimator
 import android.content.Intent
@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
+import com.example.cookbook.models.MealRepository
+import com.example.cookbook.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import com.example.cookbook.MealRepository
 class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

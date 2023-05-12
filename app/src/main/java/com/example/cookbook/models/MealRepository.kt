@@ -1,8 +1,6 @@
-package com.example.cookbook
+package com.example.cookbook.models
 
 import com.example.cookbook.data.retrofit.RetrofitInstance
-import com.example.cookbook.models.Meal
-import com.example.cookbook.models.MealList
 import retrofit2.Call
 import retrofit2.Response
 
