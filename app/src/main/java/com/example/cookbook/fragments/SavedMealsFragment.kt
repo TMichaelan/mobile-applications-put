@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 class SavedMealsFragment : Fragment(), MealAdapter.OnItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
+    private var textVisible: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,12 +32,32 @@ class SavedMealsFragment : Fragment(), MealAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        savedInstanceState?.let {
+            textVisible = it.getBoolean("textVisible", true)
+        }
+
         recyclerView = view.findViewById(R.id.recycleView)
+
         val recyclerView: RecyclerView =view.findViewById(R.id.recycleView)
         var columns = 2
         if (resources.getBoolean(R.bool.is_tablet)) columns = 1
         recyclerView.layoutManager = GridLayoutManager(context, columns)
+
+
+
+        if (resources.getBoolean(R.bool.is_tablet)) {
+            val text = view.findViewById<TextView>(R.id.textView)
+            text.visibility = if (textVisible) View.VISIBLE else View.GONE
+        }
+
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("textVisible", textVisible)
+    }
+
     override fun onResume() {
         super.onResume()
         // Загрузка сохраненных блюд из базы данных и отображение их с помощью RecyclerView
@@ -53,19 +74,18 @@ class SavedMealsFragment : Fragment(), MealAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(meal: Meal) {
-        // Здесь вы можете открыть MealDetailActivity и передать информацию о выбранном блюде
         if (resources.getBoolean(R.bool.is_tablet)) {
             val text = view?.findViewById<TextView>(R.id.textView)
             if (text != null) {
                 text.visibility = View.GONE
+                textVisible = false
             }
-
             val mealDetailFragment = MealDetailFragment.newInstance(meal)
             childFragmentManager.beginTransaction()
                 .replace(R.id.detail_frame, mealDetailFragment)
                 .commit()
         }
-        else{
+        else {
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.putExtra("meal", meal)
             startActivity(intent)

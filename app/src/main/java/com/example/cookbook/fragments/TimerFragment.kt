@@ -31,7 +31,6 @@ class TimerFragment : Fragment() {
     private lateinit var startButton: Button
     private lateinit var stopButton: Button
     private lateinit var pauseButton: Button
-    private var initialVolume = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,36 +135,31 @@ class TimerFragment : Fragment() {
             false
         }
     }
-    private fun fadeInMediaPlayer() {
-        val handler = Handler(Looper.getMainLooper())
-        val fadeInDuration = 6000 // milliseconds
-        val fadeInInterval = 100 // milliseconds
-
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                if (initialVolume < 1f && ::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
-                    initialVolume += 0.02f
-                    mediaPlayer.setVolume(initialVolume, initialVolume)
-                    handler.postDelayed(this, fadeInInterval.toLong())
-                }
-            }
-        }, fadeInInterval.toLong())
-    }
 
     private fun playSound() {
-        if (isMediaPlayerPlaying()) {
-            mediaPlayer.stop()
-            mediaPlayer.reset()
-        }
-
         mediaPlayer = MediaPlayer.create(context, R.raw.timer_sound)
-        initialVolume = 0f
-        mediaPlayer.setVolume(initialVolume, initialVolume)
+        mediaPlayer.setVolume(0f, 0f) // Start with zero volume
+        mediaPlayer.isLooping = true
+        mediaPlayer.start()
 
-        mediaPlayer.setOnPreparedListener {
-            mediaPlayer.start()
-            fadeInMediaPlayer()
-        }
+        val handler = Handler(Looper.getMainLooper())
+        val maxVolume = 1f
+        val volumeStep = 0.05f
+        val intervalMillis = 200L
+
+        handler.post(object : Runnable {
+            private var currentVolume = 0f
+
+            override fun run() {
+                currentVolume += volumeStep
+                if (currentVolume <= maxVolume) {
+                    mediaPlayer.setVolume(currentVolume, currentVolume)
+                    handler.postDelayed(this, intervalMillis)
+                } else {
+                    // Reached max volume, stop increasing volume
+                }
+            }
+        })
     }
 
     private fun stopTimer() {
