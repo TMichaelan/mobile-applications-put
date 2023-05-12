@@ -58,7 +58,7 @@ class SavedMealsFragment : Fragment(), MealAdapter.OnItemClickListener {
             }
 
             val mealDetailFragment = MealDetailFragment.newInstance(meal)
-            parentFragmentManager.beginTransaction()
+            childFragmentManager.beginTransaction()
                 .replace(R.id.detail_frame, mealDetailFragment)
                 .commit()
         }

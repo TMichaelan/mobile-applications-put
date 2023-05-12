@@ -58,6 +58,7 @@ class MealDetailFragment : Fragment() {
                 .replace(R.id.timer_fragment_container, timerFragment)
                 .commit()
         }
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

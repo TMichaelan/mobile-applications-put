@@ -23,6 +23,10 @@ import retrofit2.Response
 class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
     private var selectedMeal: Meal? = null
     private var mealList: ArrayList<Meal>? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,7 +83,7 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
                 text.visibility = View.GONE
             }
             val mealDetailFragment = MealDetailFragment.newInstance(meal)
-            parentFragmentManager.beginTransaction()
+            childFragmentManager.beginTransaction()
                 .replace(R.id.detail_frame, mealDetailFragment)
                 .commit()
         }
