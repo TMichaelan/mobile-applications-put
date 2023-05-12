@@ -29,12 +29,34 @@ class MealDetailFragment : Fragment() {
     private lateinit var saveMealButton: MaterialButton
     private lateinit var database: AppDatabase
     private var isImageZoomed = false
+    private lateinit var timerFragment: TimerFragment
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        childFragmentManager.putFragment(outState, "timerFragment", timerFragment)
+        outState.putBoolean("isImageZoomed", isImageZoomed)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            isImageZoomed = savedInstanceState.getBoolean("isImageZoomed")
+            timerFragment = childFragmentManager.getFragment(savedInstanceState, "timerFragment") as TimerFragment
+        }
+
         arguments?.let {
             meal = it.getParcelable("meal")!!
 
             database = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "cookbook-db").build()
+        }
+
+        if (savedInstanceState == null) {
+            timerFragment = TimerFragment.newInstance()
+
+            childFragmentManager.beginTransaction()
+                .replace(R.id.timer_fragment_container, timerFragment)
+                .commit()
         }
     }
     override fun onCreateView(
@@ -48,8 +70,6 @@ class MealDetailFragment : Fragment() {
         val mealName: TextView = view.findViewById(R.id.meal_name)
         val mealIngredients: TextView = view.findViewById(R.id.meal_ingredients)
         val mealInstructions: TextView = view.findViewById(R.id.meal_instructions)
-
-        val timerFragment = TimerFragment()
 
         Glide.with(mealImage)
             .load(meal.strMealThumb)
@@ -82,10 +102,6 @@ class MealDetailFragment : Fragment() {
 
         mealIngredients.text = ingredientsAndMeasures.toString()
         mealInstructions.text = meal.strInstructions
-
-        childFragmentManager.beginTransaction()
-            .replace(R.id.timer_fragment_container, timerFragment)
-            .commit()
 
         saveMealButton = view.findViewById(R.id.save_meal_button)
         updateSaveMealButtonIcon()
@@ -127,6 +143,7 @@ class MealDetailFragment : Fragment() {
         return view
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -134,25 +151,9 @@ class MealDetailFragment : Fragment() {
         val collapsingToolbarLayout: CollapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar_layout)
         collapsingToolbarLayout.title = mealName
 
-//        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBar)
-//        toolbar.setNavigationOnClickListener {
-//            requireActivity().onBackPressed()
-//        }
-//        toolbar.title = meal.strMeal
 
-        // Весь остальной код
     }
 
-//        private fun saveMealToDatabase(meal: Meal) {
-//            val db = Room.databaseBuilder(
-//                requireContext(),
-//                AppDatabase::class.java, "meal-database"
-//            ).build()
-//
-//            CoroutineScope(Dispatchers.IO).launch {
-//                db.mealDao().insertMeal(meal)
-//            }
-//        }
 
     private fun zoomInImage(imageView: ImageView) {
         val scaleX = ObjectAnimator.ofFloat(imageView, View.SCALE_X, 2.5f)
@@ -192,6 +193,7 @@ class MealDetailFragment : Fragment() {
                 putParcelable("meal", meal)
             }
         }
+        private const val TIMER_FRAGMENT_TAG = "timerFragment"
     }
 
 }
