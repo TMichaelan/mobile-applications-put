@@ -14,11 +14,12 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.cookbook.*
 
+
+private lateinit var mediaPlayer: MediaPlayer
+
 private const val ARG_PARAM_SECONDS = "seconds"
 private const val ARG_PARAM_RUNNING = "running"
 private const val ARG_PARAM_WAS_RUNNING = "wasRunning"
-private lateinit var mediaPlayer: MediaPlayer
-
 
 class TimerFragment : Fragment() {
     private var seconds = 0
@@ -30,6 +31,7 @@ class TimerFragment : Fragment() {
     private lateinit var startButton: Button
     private lateinit var stopButton: Button
     private lateinit var pauseButton: Button
+    private var initialVolume = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,16 +117,55 @@ class TimerFragment : Fragment() {
         refreshUIStates()
     }
 
+
     private fun onStopButtonClick() {
         running = false
         seconds = 0
         updateTimerUI()
         refreshUIStates()
+
+        if (isMediaPlayerPlaying()) {
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+        }
+    }
+    private fun isMediaPlayerPlaying(): Boolean {
+        return try {
+            ::mediaPlayer.isInitialized && mediaPlayer.isPlaying
+        } catch (e: IllegalStateException) {
+            false
+        }
+    }
+    private fun fadeInMediaPlayer() {
+        val handler = Handler(Looper.getMainLooper())
+        val fadeInDuration = 6000 // milliseconds
+        val fadeInInterval = 100 // milliseconds
+
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                if (initialVolume < 1f && ::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
+                    initialVolume += 0.02f
+                    mediaPlayer.setVolume(initialVolume, initialVolume)
+                    handler.postDelayed(this, fadeInInterval.toLong())
+                }
+            }
+        }, fadeInInterval.toLong())
     }
 
     private fun playSound() {
+        if (isMediaPlayerPlaying()) {
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+        }
+
         mediaPlayer = MediaPlayer.create(context, R.raw.timer_sound)
-        mediaPlayer.start()
+        initialVolume = 0f
+        mediaPlayer.setVolume(initialVolume, initialVolume)
+
+        mediaPlayer.setOnPreparedListener {
+            mediaPlayer.start()
+            fadeInMediaPlayer()
+        }
     }
 
     private fun stopTimer() {
@@ -143,7 +184,6 @@ class TimerFragment : Fragment() {
         pauseButton.visibility = View.VISIBLE
         stopButton.visibility = View.VISIBLE
     }
-
     private fun updateTimerUI() {
         secondsView.setText("%02d".format(seconds % 60))
         minutesView.setText("%02d".format(seconds / 60))
