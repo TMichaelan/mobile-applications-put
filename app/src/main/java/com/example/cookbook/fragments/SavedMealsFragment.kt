@@ -1,4 +1,4 @@
-package com.example.cookbook
+package com.example.cookbook.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,9 @@ import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cookbook.adapters.MealAdapter
+import com.example.cookbook.R
+import com.example.cookbook.activities.DetailActivity
 import com.example.cookbook.db.AppDatabase
 import com.example.cookbook.models.Meal
 import kotlinx.coroutines.launch

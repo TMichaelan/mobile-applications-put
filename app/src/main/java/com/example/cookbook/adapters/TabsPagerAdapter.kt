@@ -1,10 +1,13 @@
-package com.example.cookbook
+package com.example.cookbook.adapters
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.cookbook.fragments.HomeFragment
+import com.example.cookbook.fragments.MealsGridFragment
+import com.example.cookbook.fragments.SavedMealsFragment
 import com.example.cookbook.models.Meal
 
 class TabsPagerAdapter(

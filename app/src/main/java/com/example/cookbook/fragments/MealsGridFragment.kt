@@ -1,32 +1,22 @@
-package com.example.cookbook
+package com.example.cookbook.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cookbook.data.retrofit.RetrofitInstance
+import com.example.cookbook.adapters.MealAdapter
+import com.example.cookbook.R
+import com.example.cookbook.activities.DetailActivity
 import com.example.cookbook.models.Meal
-import com.example.cookbook.models.MealList
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import retrofit2.Call
-import retrofit2.Response
 
 class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
     private var selectedMeal: Meal? = null
-    private var mealList: ArrayList<Meal>? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,22 +43,6 @@ class MealsGridFragment : Fragment(), MealAdapter.OnItemClickListener {
             // recyclerview to inflate the items.
             recyclerView.adapter = itemAdapter
         }
-    }
-
-    private fun shareIngredients() {
-        val meal = selectedMeal
-        if (meal == null) {
-            Toast.makeText(requireContext(), "Выберите блюдо для отправки списка ингредиентов", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val ingredients = meal.getIngredientsList()
-        val shareIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, ingredients.joinToString(", "))
-            type = "text/plain"
-        }
-        startActivity(Intent.createChooser(shareIntent, "Отправить ингредиенты"))
     }
 
 

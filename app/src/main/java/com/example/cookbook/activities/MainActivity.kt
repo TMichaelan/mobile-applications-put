@@ -1,7 +1,9 @@
-package com.example.cookbook
+package com.example.cookbook.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cookbook.R
+import com.example.cookbook.adapters.TabsPagerAdapter
 import com.example.cookbook.databinding.ActivityMainBinding
 import com.example.cookbook.models.Meal
 import com.google.android.material.tabs.TabLayoutMediator
