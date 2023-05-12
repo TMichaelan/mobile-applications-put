@@ -21,7 +21,7 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DFDFDF"
+        android:background="?attr/colorSecondary"
         app:tabMaxWidth="0dp"
         app:tabIndicatorFullWidth="true"
         app:tabTextAppearance="?android:attr/textAppearanceMedium"

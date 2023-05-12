@@ -40,8 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Sellect meal to see details"
-            android:textColor="#000000"
+            android:text="@string/sellect_meal_to_see_details"
+            android:textColor="?attr/colorOnSecondary"
             android:textSize="24sp" />
     </FrameLayout>
 </LinearLayout>
