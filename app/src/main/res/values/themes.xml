@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Cookbook" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#FF3939</item>
+        <item name="colorPrimary">@color/brightRed</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -11,6 +11,6 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-         Customize your theme here.
+<!--         Customize your theme here.-->
     </style>
 </resources>

@@ -23,8 +23,7 @@
             android:layout_height="50dp"
             android:inputType="time"
             android:minWidth="50dp"
-            android:text="00"
-
+            android:text="@string/_00"
             android:textAlignment="center"
             android:textSize="40sp" />
 
@@ -33,7 +32,7 @@
             android:layout_height="wrap_content"
             android:textSize="40sp"
             style="@style/Widget.Material3.MaterialTimePicker.Display.Divider"
-            android:text=":"/>
+            android:text="@string/colon"/>
 
         <EditText
             android:id="@+id/timer_seconds"
@@ -42,7 +41,7 @@
             android:layout_height="match_parent"
             android:inputType="number"
             android:minWidth="50dp"
-            android:text="00"
+            android:text="@string/_00"
             android:textAlignment="center"
             android:textSize="40sp" />
 
@@ -57,7 +56,6 @@
         <Button
             android:id="@+id/start_timer_button"
             style="@style/Widget.Material3.Button.IconButton.Filled"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/baseline_play_arrow_24"
