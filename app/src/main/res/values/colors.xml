@@ -13,5 +13,11 @@
 
     <color name="darkBlue">#3415B0</color>
     <color name="darkViolet">#3415B0</color>
+    <color name="darkVioletD">#2E0E40</color>
+    <color name="darkVioletB">#3F0C3D</color>
+    <color name="almostBlack">#2D283E</color>
+    <color name="kindaViolet">#802BB1</color>
+
+
 
 </resources>
